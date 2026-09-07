@@ -1,26 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "bpid-theme";
 
+/** The `dark` class on <html> is the single source of truth for the theme. */
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  return () => observer.disconnect();
+}
+
+const isDark = () => document.documentElement.classList.contains("dark");
+
 /**
- * Light/dark switch mirroring the app's Appearance setting. The initial class
- * is set by the inline script in the layout; this only takes over once React
- * has hydrated, which is why `mounted` gates the icon.
+ * Light/dark switch mirroring the app's Appearance setting. The class itself is
+ * set before first paint by the inline script in the layout; this component
+ * only reads and flips it.
  */
 export function ThemeToggle({ className }: { className?: string }) {
-  const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
-    setMounted(true);
-  }, []);
+  const dark = useSyncExternalStore(subscribe, isDark, () => false);
 
   function toggle() {
     const next = !dark;
-    setDark(next);
     document.documentElement.classList.toggle("dark", next);
     try {
       localStorage.setItem(STORAGE_KEY, next ? "dark" : "light");
@@ -36,8 +41,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       className={`glass glass-rim grid h-10 w-10 place-items-center rounded-full transition hover:brightness-[1.06] ${className ?? ""}`}
     >
-      <span className="sr-only">Toggle colour scheme</span>
-      {mounted && dark ? (
+      {dark ? (
         <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" aria-hidden>
           <circle cx="12" cy="12" r="4.2" fill="currentColor" />
           <g stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">

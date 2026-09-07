@@ -109,7 +109,7 @@ export function InsideAResult() {
             </Glass>
 
             <p className="text-soft mt-4 px-2 text-xs">
-              An illustration of a result, in the site's styling. Field names and
+              An illustration of a result, in the site&rsquo;s styling. Field names and
               structure match what the app returns.
             </p>
           </Reveal>

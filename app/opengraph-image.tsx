@@ -27,7 +27,6 @@ export default async function Image() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={iconSrc} width={92} height={92} alt="" style={{ borderRadius: 24 }} />
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 34, fontWeight: 700, color: "#0E2118" }}>

@@ -50,11 +50,11 @@ export function Hero() {
 
           <dl className="mt-12 grid w-full max-w-lg grid-cols-3 gap-3">
             {facts.map((f) => (
-              <Glass key={f.k} className="px-4 py-4">
-                <dt className="text-leaf-700 dark:text-glow text-2xl font-extrabold tracking-tight">
+              <Glass key={f.k} className="px-3 py-4 sm:px-4">
+                <dt className="text-leaf-700 dark:text-glow text-xl font-extrabold tracking-tight sm:text-2xl">
                   {f.k}
                 </dt>
-                <dd className="text-soft mt-1 text-[13px] leading-snug">
+                <dd className="text-soft mt-1 text-xs leading-snug sm:text-[13px]">
                   {f.v}
                 </dd>
               </Glass>

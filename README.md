@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# budget-plant-id.com
 
-## Getting Started
+Marketing site for **Budget Plant ID** — the iOS plant identification app by
+BitLion, LLC that charges per photo instead of per month.
 
-First, run the development server:
+- App Store: https://apps.apple.com/us/app/budget-plant-id/id6747782540
+- App source: `../plant-identifier-flutter`
+
+## Stack
+
+Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS v4 · TypeScript.
+Every route is statically prerendered; there is no backend.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # http://localhost:3000
+npm run build   # production build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Design
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The site borrows the app's "liquid glass" language: translucent panes with a
+specular rim, floating over a slow-drifting aurora. The palette in
+`app/globals.css` is lifted directly from the app's `lib/constants/app_theme.dart`,
+so the two stay in step — change a colour there and change it here.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Light and dark are both first-class. The theme resolves before first paint via a
+small inline script in `app/layout.tsx`, and the toggle in the header writes the
+choice to `localStorage` under `bpid-theme`.
 
-## Learn More
+## Where the content lives
 
-To learn more about Next.js, take a look at the following resources:
+Almost everything factual is in `lib/site.ts`: URLs, the support address, the
+in-app purchase packs, and the FAQ. Update prices there and the pricing grid,
+the hero stats and the JSON-LD offers all follow.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`site.url` is set to `https://budget-plant-id.com` — change it if the site ships
+on a different domain, since it seeds `metadataBase`, the sitemap and the
+canonical URLs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Assets
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `public/app-icon.png` — the app icon, also the source for the favicon
+  (`app/icon.png`) and the Apple touch icon (`app/apple-icon.png`).
+- `public/screens/*.png` — the current App Store screenshots, pulled from the
+  iTunes lookup API. **These predate the app's liquid-glass redesign.** When
+  fresh screenshots ship to the App Store, drop the new files in with the same
+  names and nothing else needs to change.
+- `app/opengraph-image.tsx` — social card, generated at build time.

@@ -46,7 +46,9 @@ export function SiteHeader() {
             className="h-9 w-9 rounded-[10px] shadow-sm"
             priority
           />
-          <span className="text-[15px] tracking-tight">{site.name}</span>
+          <span className="text-[15px] tracking-tight whitespace-nowrap">
+            {site.name}
+          </span>
         </Link>
 
         <nav className="ml-auto hidden items-center gap-1 md:flex">
@@ -63,11 +65,11 @@ export function SiteHeader() {
 
         <div className="ml-auto flex items-center gap-2 md:ml-2">
           <ThemeToggle />
-          <AppStoreButton
-            href={site.appStoreUrl}
-            size="sm"
-            className="hidden sm:inline-flex"
-          />
+          {/* The wrapper does the hiding: the button sets its own `display`,
+              which a `hidden` class on it would lose to. */}
+          <span className="hidden sm:contents">
+            <AppStoreButton href={site.appStoreUrl} size="sm" />
+          </span>
           <button
             type="button"
             aria-label="Menu"
@@ -101,11 +103,13 @@ export function SiteHeader() {
                 {l.label}
               </Link>
             ))}
-            <AppStoreButton
-              href={site.appStoreUrl}
-              size="sm"
-              className="mt-2 justify-center sm:hidden"
-            />
+            <span className="mt-2 contents sm:hidden">
+              <AppStoreButton
+                href={site.appStoreUrl}
+                size="sm"
+                className="mt-2 justify-center"
+              />
+            </span>
           </nav>
         </div>
       ) : null}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Aurora } from "@/components/aurora";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -92,12 +93,12 @@ export default function SupportPage() {
 
           <p className="text-soft mt-10 text-sm">
             Looking for something else?{" "}
-            <a
+            <Link
               href="/#faq"
               className="text-leaf-700 dark:text-glow font-semibold underline underline-offset-4"
             >
               The FAQ
-            </a>{" "}
+            </Link>{" "}
             covers credits, accuracy and how the pricing works.
           </p>
         </div>
